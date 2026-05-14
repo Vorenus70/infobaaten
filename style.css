@@ -17,22 +17,23 @@ body {
     max-width: 100%;
     background-color: #eef7ff;
     min-height: 100vh;
-    padding: 32px 24px;
+    padding: 40px 32px;
 }
 
-/* Page header (grey area) - NOW VISIBLE */
+/* Page header (grey area) */
 .site-header {
     max-width: 1200px;
-    margin: 0 auto 24px auto;
-    padding: 8px 4px 16px 4px;
+    margin: 0 auto 20px auto;
+    padding: 0 8px 16px 8px;
 }
 
 .site-header h1 {
-    font-size: 28px;
+    font-size: 20px;
     font-weight: 400;
-    color: #202124;
+    color: #5f6368;
     margin: 0;
-    letter-spacing: -0.3px;
+    letter-spacing: -0.2px;
+    white-space: nowrap;
 }
 
 /* White dashboard card */
@@ -52,7 +53,7 @@ body {
 .dashboard-header {
     background: linear-gradient(135deg, #0b5e7e, #1b8cae);
     color: white;
-    padding: 20px 24px;
+    padding: 20px 28px;
     text-align: center;
 }
 
@@ -70,7 +71,7 @@ body {
 
 /* Filter bar */
 .filter-bar {
-    padding: 12px 20px;
+    padding: 12px 28px;
     background-color: #f8f9fa;
     border-bottom: 1px solid #dadce0;
     display: flex;
@@ -160,7 +161,7 @@ body {
 .dashboard-footer {
     background-color: #f8f9fa;
     border-top: 1px solid #dadce0;
-    padding: 16px 24px;
+    padding: 16px 28px;
 }
 
 .footer-content {
@@ -201,16 +202,17 @@ body {
     }
     
     .site-wrapper {
-        padding: 16px 12px;
+        padding: 20px 16px;
     }
     
     .site-header {
-        padding: 4px 4px 12px 4px;
-        margin-bottom: 16px;
+        padding: 0 4px 12px 4px;
+        margin-bottom: 12px;
     }
     
     .site-header h1 {
-        font-size: 22px;
+        font-size: 18px;
+        white-space: normal;
     }
     
     .dashboard-header {
@@ -226,7 +228,7 @@ body {
     }
     
     .filter-bar {
-        padding: 8px 12px;
+        padding: 8px 16px;
     }
     
     .filter-left label {
@@ -266,15 +268,18 @@ body {
 /* Desktop large screens */
 @media (min-width: 1200px) {
     .site-wrapper {
-        padding: 48px 32px;
+        padding: 48px 40px;
     }
     
-    .site-header h1 {
-        font-size: 32px;
-        margin-bottom: 8px;
+    .dashboard-header {
+        padding: 24px 32px;
     }
     
-    .table-wrapper {
-        max-height: 60vh;
+    .filter-bar {
+        padding: 14px 32px;
+    }
+    
+    .dashboard-footer {
+        padding: 18px 32px;
     }
 }
