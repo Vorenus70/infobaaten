@@ -8,7 +8,7 @@ body {
     font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
     background-color: #eef7ff;
     margin: 0;
-    padding: 0;
+    padding: 12px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -19,10 +19,12 @@ body {
     width: 100%;
     margin: 0 auto;
     background-color: white;
+    border-radius: 16px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    min-height: 100vh;
+    border: 1px solid #cde4f0;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 /* Header */
@@ -79,12 +81,12 @@ body {
     max-width: 80px;
 }
 
-/* Scrollable table container - FIXED */
+/* Scrollable table container */
 .table-wrapper {
     flex: 1;
     overflow-x: auto;
     overflow-y: auto;
-    max-height: 60vh;
+    max-height: 55vh;
     min-height: 300px;
 }
 
@@ -138,62 +140,58 @@ body {
 .col-change-raw { width: 25%; }
 .col-change-cm { width: 25%; }
 
-/* Footer - FIXED: everything on one line */
+/* Footer - NEW ORDER: Facebook button above copyright */
 .footer {
     background-color: #f8fafc;
     border-top: 1px solid #cde4f0;
-    padding: 12px 20px;
+    padding: 16px 20px;
     flex-shrink: 0;
 }
 
 .footer-content {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
     max-width: 100%;
     margin: 0 auto;
-}
-
-.footer-copyright {
-    font-size: 11px;
-    color: #9aa0a6;
-    font-family: 'Segoe UI', Roboto, sans-serif;
-    white-space: nowrap;
 }
 
 .facebook-btn {
     background: linear-gradient(135deg, #1877f2, #0e63b0);
     color: white;
-    padding: 6px 14px;
+    padding: 8px 20px;
     border-radius: 40px;
     text-decoration: none;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     transition: transform 0.2s ease;
-    white-space: nowrap;
 }
 
 .facebook-btn:hover {
     transform: scale(1.02);
 }
 
+.footer-copyright {
+    font-size: 10px;
+    color: #9aa0a6;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    text-align: center;
+}
+
 /* Desktop styles */
 @media (min-width: 769px) {
     body {
         padding: 24px;
-        background-color: #eef7ff;
-    }
-    .page-container {
-        border-radius: 16px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-        min-height: auto;
     }
     .table-wrapper {
-        max-height: 65vh;
+        max-height: 60vh;
+    }
+    .footer {
+        padding: 16px 24px;
     }
 }
 
@@ -201,6 +199,9 @@ body {
 @media (max-width: 768px) {
     .hide-on-mobile {
         display: none;
+    }
+    body {
+        padding: 8px;
     }
     .dashboard-header h1 {
         font-size: 18px;
@@ -225,24 +226,17 @@ body {
         max-width: 70px;
     }
     .footer {
-        padding: 10px 16px;
-    }
-    .footer-content {
-        flex-direction: row;
-        justify-content: space-between;
-        gap: 10px;
-    }
-    .footer-copyright {
-        font-size: 10px;
-        white-space: nowrap;
+        padding: 12px 16px;
     }
     .facebook-btn {
-        padding: 5px 12px;
-        font-size: 11px;
-        gap: 4px;
+        padding: 6px 16px;
+        font-size: 12px;
+    }
+    .footer-copyright {
+        font-size: 9px;
     }
     .table-wrapper {
-        max-height: 50vh;
+        max-height: 45vh;
         min-height: 250px;
     }
 }
