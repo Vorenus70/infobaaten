@@ -10,13 +10,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="dashboard-container">
+    <div class="page-container">
+        <!-- Header -->
         <div class="dashboard-header">
             <h1>🚤 Osensjøen – Vannstandhistorikk</h1>
             <p>Oppdateres daglig automatisk | Data fra GLB</p>
         </div>
 
-        <!-- Compact filter bar -->
+        <!-- Filter bar -->
         <div class="filter-bar">
             <div class="filter-left">
                 <label for="yearSelect">Vis år:</label>
@@ -26,6 +27,7 @@
             </div>
         </div>
 
+        <!-- Scrollable table container -->
         <div class="table-wrapper">
             <table class="data-table" id="waterTable">
                 <thead>
@@ -39,6 +41,20 @@
                 </thead>
                 <tbody></tbody>
             </table>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-content">
+                <div class="footer-copyright">
+                    © 2026 InfoBåten
+                </div>
+                <div class="footer-button">
+                    <a href="https://www.facebook.com/infobaaten" target="_blank" rel="noopener noreferrer" class="facebook-btn">
+                        <span>👍</span> Like på Facebook
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 
