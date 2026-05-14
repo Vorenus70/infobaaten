@@ -10,49 +10,56 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="page-container">
-        <!-- Header -->
-        <div class="dashboard-header">
-            <h1>🚤 Osensjøen – Vannstandhistorikk</h1>
-            <p>Oppdateres daglig automatisk | Data fra GLB</p>
+    <!-- Grey page wrapper (like Google Sites) -->
+    <div class="site-wrapper">
+        
+        <!-- Page header (grey area) -->
+        <div class="site-header">
+            <h1>InfoBåten Vannstandhistorikk</h1>
         </div>
 
-        <!-- Filter bar -->
-        <div class="filter-bar">
-            <div class="filter-left">
-                <label for="yearSelect">Vis år:</label>
-                <select id="yearSelect">
-                    <option value="all">Alle år</option>
-                </select>
+        <!-- White dashboard card -->
+        <div class="dashboard-card">
+            <div class="dashboard-header">
+                <h2>🚤 Osensjøen – Vannstandhistorikk</h2>
+                <p>Oppdateres daglig automatisk | Data fra GLB</p>
             </div>
-        </div>
 
-        <!-- Scrollable table container -->
-        <div class="table-wrapper">
-            <table class="data-table" id="waterTable">
-                <thead>
-                    <tr>
-                        <th class="col-timestamp hide-on-mobile">Tid</th>
-                        <th class="col-date">Dato</th>
-                        <th class="col-waterlevel">Vannstand (moh)</th>
-                        <th class="col-change-raw">Endring m</th>
-                        <th class="col-change-cm">Endring cm</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
-
-        <!-- Footer -->
-        <div class="footer">
-            <div class="footer-content">
-                <div class="footer-copyright">
-                    © 2026 InfoBåten
+            <!-- Filter bar -->
+            <div class="filter-bar">
+                <div class="filter-left">
+                    <label for="yearSelect">Vis år:</label>
+                    <select id="yearSelect">
+                        <option value="all">Alle år</option>
+                    </select>
                 </div>
-                <div class="footer-button">
+            </div>
+
+            <!-- Scrollable table container (ONLY this scrolls) -->
+            <div class="table-wrapper">
+                <table class="data-table" id="waterTable">
+                    <thead>
+                        <tr>
+                            <th class="col-timestamp hide-on-mobile">Tid</th>
+                            <th class="col-date">Dato</th>
+                            <th class="col-waterlevel">Vannstand (moh)</th>
+                            <th class="col-change-raw">Endring m</th>
+                            <th class="col-change-cm">Endring cm</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <!-- Footer inside card -->
+            <div class="dashboard-footer">
+                <div class="footer-content">
                     <a href="https://www.facebook.com/infobaaten" target="_blank" rel="noopener noreferrer" class="facebook-btn">
                         <span>👍</span> Like på Facebook
                     </a>
+                    <div class="footer-copyright">
+                        © 2026 InfoBåten
+                    </div>
                 </div>
             </div>
         </div>
