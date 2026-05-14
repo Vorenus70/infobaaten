@@ -20,21 +20,26 @@ body {
     padding: 40px 32px;
 }
 
-/* Page header (grey area) - FIXED to be visible */
+/* Page header - PIMPED UP */
 .site-header {
     max-width: 1200px;
-    margin: 0 auto 16px auto;
-    padding: 0 8px 20px 8px;
-    border-bottom: 1px solid #dadce0;
+    margin: 0 auto 24px auto;
+    padding: 0 8px 8px 8px;
 }
 
 .site-header h1 {
-    font-size: 18px;
+    font-size: 24px;
     font-weight: 500;
-    color: #5f6368;
+    background: linear-gradient(135deg, #1a73e8, #0b5e7e);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
     margin: 0;
-    letter-spacing: normal;
+    letter-spacing: -0.3px;
     white-space: nowrap;
+    display: inline-block;
+    padding-bottom: 4px;
+    border-bottom: 3px solid #1b8cae;
 }
 
 /* White dashboard card */
@@ -42,7 +47,7 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     background-color: white;
-    border-radius: 8px;
+    border-radius: 12px;
     box-shadow: 0 1px 2px 0 rgba(0,0,0,0.1), 0 2px 6px 2px rgba(0,0,0,0.05);
     border: 1px solid #dadce0;
     display: flex;
@@ -50,13 +55,13 @@ body {
     overflow: hidden;
 }
 
-/* Blue header inside card - WITH ROUNDED CORNERS */
+/* Blue header inside card */
 .dashboard-header {
     background: linear-gradient(135deg, #0b5e7e, #1b8cae);
     color: white;
     padding: 20px 28px;
     text-align: center;
-    border-radius: 8px 8px 0 0;
+    border-radius: 12px 12px 0 0;
 }
 
 .dashboard-header h2 {
@@ -104,7 +109,7 @@ body {
     color: #202124;
 }
 
-/* Scrollable table container - ONLY THIS SCROLLS */
+/* Scrollable table container */
 .table-wrapper {
     overflow-x: auto;
     overflow-y: auto;
@@ -159,11 +164,12 @@ body {
 .col-change-raw { width: 25%; }
 .col-change-cm { width: 25%; }
 
-/* Dashboard footer - MORE SPACE ABOVE BUTTON */
+/* Dashboard footer - EXTRA SPACE ABOVE */
 .dashboard-footer {
     background-color: #f8f9fa;
     border-top: 1px solid #dadce0;
-    padding: 24px 28px 20px 28px;
+    padding: 28px 28px 24px 28px;
+    margin-top: 0;
 }
 
 .footer-content {
@@ -178,18 +184,19 @@ body {
     background: linear-gradient(135deg, #1877f2, #0e63b0);
     color: white;
     padding: 8px 20px;
-    border-radius: 6px;
+    border-radius: 8px;
     text-decoration: none;
     font-size: 13px;
     font-weight: 500;
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    transition: opacity 0.2s;
+    transition: all 0.2s ease;
 }
 
 .facebook-btn:hover {
     opacity: 0.9;
+    transform: scale(1.02);
 }
 
 .footer-copyright {
@@ -209,13 +216,17 @@ body {
     
     .site-header {
         padding: 0 4px 16px 4px;
-        margin-bottom: 12px;
-        border-bottom: 1px solid #dadce0;
+        margin-bottom: 16px;
     }
     
     .site-header h1 {
-        font-size: 16px;
+        font-size: 18px;
         white-space: normal;
+        border-bottom-width: 2px;
+    }
+    
+    .dashboard-card {
+        border-radius: 8px;
     }
     
     .dashboard-header {
@@ -256,7 +267,7 @@ body {
     }
     
     .dashboard-footer {
-        padding: 20px 16px 16px 16px;
+        padding: 24px 16px 20px 16px;
     }
     
     .facebook-btn {
@@ -275,6 +286,10 @@ body {
         padding: 48px 40px;
     }
     
+    .site-header h1 {
+        font-size: 28px;
+    }
+    
     .dashboard-header {
         padding: 24px 32px;
     }
@@ -284,6 +299,6 @@ body {
     }
     
     .dashboard-footer {
-        padding: 28px 32px 22px 32px;
+        padding: 32px 32px 26px 32px;
     }
 }
