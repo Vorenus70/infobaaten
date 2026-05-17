@@ -32,19 +32,18 @@ function formatDateForChart(dateStr) {
     return `${parts[0]}.${parts[1]}`;
 }
 
-// NEW: Format timestamp for "Oppdatert" display
 function formatTimestamp(dateStr, timeStr) {
     if (!dateStr || !timeStr) return "Oppdatert: --:--";
     
-    // Date format: DD-MM-YYYY
     const dateParts = dateStr.split('-');
     if (dateParts.length !== 3) return `Oppdatert: ${timeStr.substring(0, 5)}`;
     
     const day = dateParts[0];
     const month = dateParts[1];
-    const time = timeStr.substring(0, 5); // HH:MM
+    const year = dateParts[2].slice(-2); // Get last two digits of year (2026 → 26)
+    const time = timeStr.substring(0, 5);
     
-    return `Oppdatert: ${day}.${month} - ${time}`;
+    return `Oppdatert: ${day}.${month}.${year} - ${time}`;
 }
 
 // Calculate linear regression trend line
