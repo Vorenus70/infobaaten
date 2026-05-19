@@ -13,7 +13,7 @@ function checkMobile() {
 }
 
 function getDateObject(dateStr) {
-    const parts = dateStr.split('-'); 
+    const parts = dateStr.split('-');
     if (parts.length !== 3) return null;
     return new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10));
 }
@@ -159,7 +159,10 @@ function updateLatestCard() {
     
     // No data available – show friendly message
     if (allRows.length === 0) {
-        if (latestValueElem) latestValueElem.textContent = "Ingen data";
+        if (latestValueElem) {
+            latestValueElem.textContent = "Ingen data";
+            latestValueElem.classList.add('no-data');
+        }
         if (latestUpdatedElem) latestUpdatedElem.textContent = "Ikke tilgjengelig";
         if (latestChangeElem) {
             if (changeArrow) changeArrow.textContent = '⏳';
@@ -169,15 +172,40 @@ function updateLatestCard() {
         return;
     }
     
-    // Data exists – show as normal
+    // Data exists – remove no-data class
+    if (latestValueElem) {
+        latestValueElem.classList.remove('no-data');
+    }
+    
     const latest = allRows[0];
     const waterLevel = latest["Water Level (moh)"];
     const changeCm = latest["Change cm/m"];
     
-    if (latestValueElem && waterLevel) {
-        latestValueElem.textContent = waterLevel;
+    // Check if the latest row has valid water level
+    if (waterLevel && waterLevel !== "Ikke tilgjengelig" && !isNaN(parseFloat(waterLevel))) {
+        if (latestValueElem) latestValueElem.textContent = waterLevel;
+    } else {
+        // Latest row has no data
+        if (latestValueElem) {
+            latestValueElem.textContent = "Ingen data";
+            latestValueElem.classList.add('no-data');
+        }
+        if (latestChangeElem) {
+            if (changeArrow) changeArrow.textContent = '⏳';
+            if (changeValue) changeValue.textContent = 'Venter på data';
+            latestChangeElem.className = 'latest-change neutral';
+        }
+        if (latestUpdatedElem && latest.Timestamp) {
+            const date = latest.Date;
+            const time = latest.Timestamp;
+            if (date && time) {
+                latestUpdatedElem.textContent = formatTimestamp(date, time);
+            }
+        }
+        return;
     }
     
+    // Valid water level – show change indicator
     if (latestChangeElem && changeCm) {
         let changeNum = parseFloat(changeCm);
         let changeText = changeCm.toString().replace('cm', '').trim();
