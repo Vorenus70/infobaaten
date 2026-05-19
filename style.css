@@ -601,21 +601,4 @@ body {
 }
 
 ***********************************************'
-/* Fix for Facebook in-app browser and other embedded browsers */
-.data-table th,
-.data-table td {
-    white-space: nowrap;
-    font-size: 12px;
-}
 
-.col-waterlevel, 
-.col-change-raw, 
-.col-change-cm {
-    white-space: nowrap;
-}
-
-/* Ensure table doesn't overflow */
-.table-wrapper {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-}
