@@ -157,7 +157,7 @@ function updateLatestCard() {
     const changeArrow = document.querySelector('.change-arrow');
     const changeValue = document.querySelector('.change-value');
     
-    // No data available – show friendly message
+    // No data available at all
     if (allRows.length === 0) {
         if (latestValueElem) {
             latestValueElem.textContent = "Ingen data";
@@ -172,20 +172,46 @@ function updateLatestCard() {
         return;
     }
     
-    // Data exists – remove no-data class
-    if (latestValueElem) {
-        latestValueElem.classList.remove('no-data');
-    }
-    
     const latest = allRows[0];
     const waterLevel = latest["Water Level (moh)"];
     const changeCm = latest["Change cm/m"];
     
-    // Check if the latest row has valid water level
-    if (waterLevel && waterLevel !== "Ikke tilgjengelig" && !isNaN(parseFloat(waterLevel))) {
-        if (latestValueElem) latestValueElem.textContent = waterLevel;
+    // Check if water level is valid (number, not "Ikke tilgjengelig")
+    const isValidWaterLevel = waterLevel && 
+                              waterLevel !== "Ikke tilgjengelig" && 
+                              waterLevel !== "" &&
+                              !isNaN(parseFloat(waterLevel));
+    
+    if (isValidWaterLevel) {
+        // Valid water level – show normally
+        if (latestValueElem) {
+            latestValueElem.textContent = waterLevel;
+            latestValueElem.classList.remove('no-data');
+        }
+        
+        // Show change indicator
+        if (latestChangeElem && changeCm) {
+            let changeNum = parseFloat(changeCm);
+            let changeText = changeCm.toString().replace('cm', '').trim();
+            
+            if (!isNaN(changeNum)) {
+                if (changeNum > 0) {
+                    if (changeArrow) changeArrow.textContent = '▲';
+                    if (changeValue) changeValue.textContent = `+${changeText} cm`;
+                    latestChangeElem.className = 'latest-change positive';
+                } else if (changeNum < 0) {
+                    if (changeArrow) changeArrow.textContent = '▼';
+                    if (changeValue) changeValue.textContent = `${changeText} cm`;
+                    latestChangeElem.className = 'latest-change negative';
+                } else {
+                    if (changeArrow) changeArrow.textContent = '●';
+                    if (changeValue) changeValue.textContent = `${changeText} cm`;
+                    latestChangeElem.className = 'latest-change neutral';
+                }
+            }
+        }
     } else {
-        // Latest row has no data
+        // No valid water level – show "Ingen data" with no-data class
         if (latestValueElem) {
             latestValueElem.textContent = "Ingen data";
             latestValueElem.classList.add('no-data');
@@ -194,36 +220,6 @@ function updateLatestCard() {
             if (changeArrow) changeArrow.textContent = '⏳';
             if (changeValue) changeValue.textContent = 'Venter på data';
             latestChangeElem.className = 'latest-change neutral';
-        }
-        if (latestUpdatedElem && latest.Timestamp) {
-            const date = latest.Date;
-            const time = latest.Timestamp;
-            if (date && time) {
-                latestUpdatedElem.textContent = formatTimestamp(date, time);
-            }
-        }
-        return;
-    }
-    
-    // Valid water level – show change indicator
-    if (latestChangeElem && changeCm) {
-        let changeNum = parseFloat(changeCm);
-        let changeText = changeCm.toString().replace('cm', '').trim();
-        
-        if (!isNaN(changeNum)) {
-            if (changeNum > 0) {
-                if (changeArrow) changeArrow.textContent = '▲';
-                if (changeValue) changeValue.textContent = `+${changeText} cm`;
-                latestChangeElem.className = 'latest-change positive';
-            } else if (changeNum < 0) {
-                if (changeArrow) changeArrow.textContent = '▼';
-                if (changeValue) changeValue.textContent = `${changeText} cm`;
-                latestChangeElem.className = 'latest-change negative';
-            } else {
-                if (changeArrow) changeArrow.textContent = '●';
-                if (changeValue) changeValue.textContent = `${changeText} cm`;
-                latestChangeElem.className = 'latest-change neutral';
-            }
         }
     }
     
