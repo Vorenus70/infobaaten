@@ -621,3 +621,16 @@ body {
     -webkit-overflow-scrolling: touch;
 }
 
+
+/* No data state - smaller, subtler */
+.latest-value.no-data {
+    font-size: 18px;
+    font-weight: 400;
+    color: #9aa0a6;
+    font-style: italic;
+}
+
+.latest-value.no-data::after {
+    content: "";
+    display: none;
+}
