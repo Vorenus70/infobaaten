@@ -157,7 +157,6 @@ function updateLatestCard() {
     const changeArrow = document.querySelector('.change-arrow');
     const changeValue = document.querySelector('.change-value');
     
-    // No data available at all
     if (allRows.length === 0) {
         if (latestValueElem) {
             latestValueElem.textContent = "Ingen data";
@@ -172,24 +171,27 @@ function updateLatestCard() {
         return;
     }
     
+    if (latestValueElem) {
+        latestValueElem.classList.remove('no-data');
+    }
+    
     const latest = allRows[0];
     const waterLevel = latest["Water Level (moh)"];
-    const changeCm = latest["Change cm/m"];
+    let changeCm = latest["Change cm/m"];
     
-    // Check if water level is valid (number, not "Ikke tilgjengelig")
+    // Clean the change value: remove apostrophe and leading '+'
+    if (changeCm) {
+        changeCm = changeCm.toString().replace(/^'/, '').replace(/^\+/, '');
+    }
+    
     const isValidWaterLevel = waterLevel && 
                               waterLevel !== "Ikke tilgjengelig" && 
                               waterLevel !== "" &&
                               !isNaN(parseFloat(waterLevel));
     
     if (isValidWaterLevel) {
-        // Valid water level – show normally
-        if (latestValueElem) {
-            latestValueElem.textContent = waterLevel;
-            latestValueElem.classList.remove('no-data');
-        }
+        if (latestValueElem) latestValueElem.textContent = waterLevel;
         
-        // Show change indicator
         if (latestChangeElem && changeCm) {
             let changeNum = parseFloat(changeCm);
             let changeText = changeCm.toString().replace('cm', '').trim();
@@ -197,7 +199,7 @@ function updateLatestCard() {
             if (!isNaN(changeNum)) {
                 if (changeNum > 0) {
                     if (changeArrow) changeArrow.textContent = '▲';
-                    if (changeValue) changeValue.textContent = `+${changeText} cm`;
+                    if (changeValue) changeValue.textContent = `${changeText} cm`;
                     latestChangeElem.className = 'latest-change positive';
                 } else if (changeNum < 0) {
                     if (changeArrow) changeArrow.textContent = '▼';
@@ -211,7 +213,6 @@ function updateLatestCard() {
             }
         }
     } else {
-        // No valid water level – show "Ingen data" with no-data class
         if (latestValueElem) {
             latestValueElem.textContent = "Ingen data";
             latestValueElem.classList.add('no-data');
@@ -223,7 +224,6 @@ function updateLatestCard() {
         }
     }
     
-    // Update timestamp
     if (latestUpdatedElem) {
         const date = latest.Date;
         const time = latest.Timestamp;
