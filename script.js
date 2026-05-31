@@ -237,6 +237,7 @@ function updateLatestCard() {
     }
 }
 
+
 function showToast(message, isError = false) {
     let toast = document.querySelector('.refresh-toast');
     if (!toast) {
