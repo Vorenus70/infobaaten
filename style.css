@@ -369,10 +369,10 @@ body {
 
 .modal-content {
     background-color: white;
-    margin: 10% auto;
+    margin: 5% auto;  /* Changed from 10% to 5% - moves it up */
     padding: 0;
-    width: 90%;
-    max-width: 800px;
+    width: 85%;  /* Slightly wider */
+    max-width: 900px;  /* Larger max width */
     border-radius: 16px;
     box-shadow: 0 20px 40px rgba(0,0,0,0.3);
 }
