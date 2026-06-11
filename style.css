@@ -368,7 +368,7 @@ body {
 
 .modal-content {
     background-color: white;
-    margin: 10% auto;
+    margin: 8vh auto;  /* Viewport height based - moves modal up */
     padding: 0;
     width: 90%;
     max-width: 800px;
@@ -575,7 +575,7 @@ body {
     }
     
     .modal-content {
-        margin: 20% auto;
+        margin: 15% auto;  /* Adjusted for mobile */
         width: 95%;
     }
     
