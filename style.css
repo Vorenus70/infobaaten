@@ -430,12 +430,6 @@ body {
     font-style: italic;
 }
 
-
-
-
-
-
-
 .latest-value.no-data::after {
     content: "";
     display: none;
@@ -606,20 +600,63 @@ body {
     }
 }
 
-/* Extra small devices (phones under 480px) */
+/* Extra small devices (phones under 480px) - ONE ROW LAYOUT */
 @media (max-width: 480px) {
-    .filter-left {
+    .filter-bar {
+        flex-direction: row;
         flex-wrap: wrap;
-        gap: 8px;
+        gap: 6px;
+        padding: 8px 12px;
+    }
+    
+    .filter-left {
+        flex: 2;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 4px;
+        flex-wrap: nowrap;
+        width: auto;
+        justify-content: flex-start;
+    }
+    
+    .filter-left label {
+        font-size: 11px;
+        white-space: nowrap;
     }
     
     .filter-left select {
-        flex: 1;
-        min-width: 80px;
+        padding: 5px 4px;
+        font-size: 11px;
+        min-width: 65px;
+        width: auto;
+    }
+    
+    /* Make year select smaller */
+    #yearSelect {
+        min-width: 70px;
+        max-width: 85px;
+    }
+    
+    /* Make month select smaller */
+    #monthSelect {
+        min-width: 65px;
+        max-width: 75px;
     }
     
     .action-buttons {
-        justify-content: space-around;
+        flex: 1;
+        justify-content: flex-end;
+        gap: 4px;
+    }
+    
+    .action-btn {
+        padding: 5px;
+    }
+    
+    .action-icon {
+        width: 16px;
+        height: 16px;
     }
     
     /* Hide the text span on mobile */
@@ -630,20 +667,17 @@ body {
     /* Show the icon span on mobile */
     #monthLabel .mobile-only {
         display: inline;
-        font-size: 14px;
+        font-size: 12px;
     }
     
-    /* Hide any other text inside the label */
+    /* Clean up label */
     #monthLabel {
+        margin-left: 0 !important;
         font-size: 0;
     }
     
     #monthLabel .mobile-only {
-        font-size: 14px;
-    }
-    
-    #monthLabel {
-        margin-left: 0 !important;
+        font-size: 12px;
     }
 }
 
