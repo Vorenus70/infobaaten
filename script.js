@@ -6,6 +6,8 @@ const monthNames = ['januar', 'februar', 'mars', 'april', 'mai', 'juni',
 let allRows = [];
 let chartInstance = null;   
 let isMobile = false;
+let selectedYear = 'all';
+let selectedMonth = 'all';
 
 // Detect mobile device
 function checkMobile() {
@@ -21,6 +23,11 @@ function getDateObject(dateStr) {
 function getYear(dateStr) {
     const parts = dateStr.split('-');
     return parts.length === 3 ? parseInt(parts[2], 10) : null;
+}
+
+function getMonth(dateStr) {
+    const parts = dateStr.split('-');
+    return parts.length === 3 ? parseInt(parts[1], 10) : null;
 }
 
 function formatDateForChart(dateStr) {
@@ -78,22 +85,52 @@ function addDivider(tbody, month, year) {
     tbody.appendChild(dividerRow);
 }
 
-function renderTable(selectedYear) {
+function renderTable() {
     const tbody = document.querySelector("#waterTable tbody");
     tbody.innerHTML = "";
     
     let filteredRows = allRows;
+    
+    // Filter by year
     if (selectedYear !== 'all') {
-        filteredRows = allRows.filter(row => getYear(row.Date) === parseInt(selectedYear, 10));
+        filteredRows = filteredRows.filter(row => getYear(row.Date) === parseInt(selectedYear, 10));
+    }
+    
+    // Filter by month
+    if (selectedMonth !== 'all' && selectedYear !== 'all') {
+        filteredRows = filteredRows.filter(row => getMonth(row.Date) === parseInt(selectedMonth, 10));
     }
     
     if (filteredRows.length === 0) {
         const tr = document.createElement("tr");
-        tr.innerHTML = `<td colspan="5" style="text-align: center;">Ingen data for valgt år</td>`;
+        let message = "Ingen data";
+        if (selectedYear !== 'all' && selectedMonth !== 'all') {
+            message = `Ingen data for ${monthNames[parseInt(selectedMonth) - 1]} ${selectedYear}`;
+        } else if (selectedYear !== 'all') {
+            message = `Ingen data for ${selectedYear}`;
+        }
+        tr.innerHTML = `<td colspan="5" style="text-align: center;">${message}</td>`;
         tbody.appendChild(tr);
         return;
     }
     
+    // If month is selected, show all rows without month dividers
+    if (selectedMonth !== 'all' && selectedYear !== 'all') {
+        filteredRows.forEach(row => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td class="hide-on-mobile">${row.Timestamp || ''}</td>
+                <td style="white-space: nowrap;">${row.Date || ''}</td>
+                <td>${row["Water Level (moh)"] || ''}</td>
+                <td>${row["Change vs yesterday"] || ''}</td>
+                <td>${row["Change cm/m"] || ''}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+        return;
+    }
+    
+    // Group by month (only when no specific month is selected)
     const grouped = {};
     filteredRows.forEach(row => {
         const date = getDateObject(row.Date);
@@ -147,7 +184,50 @@ function populateYearOptions() {
     } else {
         select.value = 'all';
     }
-    renderTable(select.value);
+    selectedYear = select.value;
+}
+
+function populateMonthOptions() {
+    const monthSelect = document.getElementById('monthSelect');
+    const monthLabel = document.getElementById('monthLabel');
+    const monthOptions = monthSelect.querySelectorAll('option');
+    
+    // Reset month select to "Alle måneder"
+    monthSelect.value = 'all';
+    selectedMonth = 'all';
+    
+    if (selectedYear === 'all') {
+        // Hide month selector when no year is selected
+        monthSelect.style.display = 'none';
+        if (monthLabel) monthLabel.style.display = 'none';
+        return;
+    }
+    
+    // Get available months for selected year
+    const availableMonths = new Set();
+    allRows.forEach(row => {
+        if (getYear(row.Date) === parseInt(selectedYear, 10)) {
+            const month = getMonth(row.Date);
+            if (month) availableMonths.add(month);
+        }
+    });
+    
+    // Enable/disable month options
+    for (let i = 1; i < monthOptions.length; i++) {
+        const option = monthOptions[i];
+        const monthValue = parseInt(option.value, 10);
+        if (availableMonths.has(monthValue)) {
+            option.disabled = false;
+            option.style.opacity = '1';
+        } else {
+            option.disabled = true;
+            option.style.opacity = '0.5';
+        }
+    }
+    
+    // Show month selector
+    monthSelect.style.display = 'inline-block';
+    if (monthLabel) monthLabel.style.display = 'inline';
 }
 
 function updateLatestCard() {
@@ -179,7 +259,6 @@ function updateLatestCard() {
     const waterLevel = latest["Water Level (moh)"];
     let changeCm = latest["Change cm/m"];
     
-    // Clean the change value: remove apostrophe and leading '+'
     if (changeCm) {
         changeCm = changeCm.toString().replace(/^'/, '').replace(/^\+/, '');
     }
@@ -237,7 +316,6 @@ function updateLatestCard() {
     }
 }
 
-
 function showToast(message, isError = false) {
     let toast = document.querySelector('.refresh-toast');
     if (!toast) {
@@ -272,14 +350,29 @@ function refreshData() {
                 return dateB - dateA;
             });
             
-            const currentYear = document.getElementById('yearSelect').value;
+            const previousYear = selectedYear;
+            const previousMonth = selectedMonth;
+            
             populateYearOptions();
             
-            const select = document.getElementById('yearSelect');
-            if (select.querySelector(`option[value="${currentYear}"]`)) {
-                select.value = currentYear;
+            // Restore previous selections if they still exist
+            const yearSelect = document.getElementById('yearSelect');
+            if (yearSelect.querySelector(`option[value="${previousYear}"]`)) {
+                yearSelect.value = previousYear;
+                selectedYear = previousYear;
+                populateMonthOptions();
+                
+                const monthSelect = document.getElementById('monthSelect');
+                if (monthSelect.querySelector(`option[value="${previousMonth}"]`) && !monthSelect.querySelector(`option[value="${previousMonth}"]`).disabled) {
+                    monthSelect.value = previousMonth;
+                    selectedMonth = previousMonth;
+                } else {
+                    selectedMonth = 'all';
+                    monthSelect.value = 'all';
+                }
             }
-            renderTable(select.value);
+            
+            renderTable();
             updateLatestCard();
             
             refreshBtn.innerHTML = originalContent;
@@ -295,11 +388,14 @@ function refreshData() {
 }
 
 function exportToCSV() {
-    const selectedYear = document.getElementById('yearSelect').value;
-    
     let exportRows = allRows;
+    
     if (selectedYear !== 'all') {
-        exportRows = allRows.filter(row => getYear(row.Date) === parseInt(selectedYear, 10));
+        exportRows = exportRows.filter(row => getYear(row.Date) === parseInt(selectedYear, 10));
+    }
+    
+    if (selectedMonth !== 'all' && selectedYear !== 'all') {
+        exportRows = exportRows.filter(row => getMonth(row.Date) === parseInt(selectedMonth, 10));
     }
     
     if (exportRows.length === 0) {
@@ -326,9 +422,10 @@ function exportToCSV() {
     const url = URL.createObjectURL(blob);
     const today = new Date();
     const dateStr = today.toISOString().slice(0, 10);
-    const fileName = selectedYear === 'all' 
-        ? `vannstand_osensjoen_alle_${dateStr}.csv`
-        : `vannstand_osensjoen_${selectedYear}.csv`;
+    let fileName = `vannstand_osensjoen_${dateStr}.csv`;
+    if (selectedYear !== 'all') {
+        fileName = `vannstand_osensjoen_${selectedYear}${selectedMonth !== 'all' ? '_' + monthNames[parseInt(selectedMonth) - 1] : ''}_${dateStr}.csv`;
+    }
     
     link.setAttribute('href', url);
     link.setAttribute('download', fileName);
@@ -342,11 +439,14 @@ function exportToCSV() {
 }
 
 function showGraph() {
-    const selectedYear = document.getElementById('yearSelect').value;
-    
     let graphRows = allRows;
+    
     if (selectedYear !== 'all') {
-        graphRows = allRows.filter(row => getYear(row.Date) === parseInt(selectedYear, 10));
+        graphRows = graphRows.filter(row => getYear(row.Date) === parseInt(selectedYear, 10));
+    }
+    
+    if (selectedMonth !== 'all' && selectedYear !== 'all') {
+        graphRows = graphRows.filter(row => getMonth(row.Date) === parseInt(selectedMonth, 10));
     }
     
     if (graphRows.length === 0) {
@@ -525,10 +625,23 @@ function init() {
             });
             
             populateYearOptions();
+            populateMonthOptions();
             updateLatestCard();
+            renderTable();
             
+            // Year select event
             document.getElementById('yearSelect').addEventListener('change', function() {
-                renderTable(this.value);
+                selectedYear = this.value;
+                selectedMonth = 'all';
+                document.getElementById('monthSelect').value = 'all';
+                populateMonthOptions();
+                renderTable();
+            });
+            
+            // Month select event
+            document.getElementById('monthSelect').addEventListener('change', function() {
+                selectedMonth = this.value;
+                renderTable();
             });
             
             document.getElementById('refreshBtn').onclick = function(e) { e.preventDefault(); refreshData(); };
