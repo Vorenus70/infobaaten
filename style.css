@@ -354,7 +354,7 @@ body {
     opacity: 1;
 }
 
-/* ========== MODAL STYLES - FIXED ========== */
+/* ========== MODAL STYLES ========== */
 .modal {
     display: none;
     position: fixed;
@@ -369,12 +369,16 @@ body {
 
 .modal-content {
     background-color: white;
-    margin: 5% auto;  /* Changed from 10% to 5% - moves it up */
+    margin: 5% auto;
     padding: 0;
-    width: 85%;  /* Slightly wider */
-    max-width: 900px;  /* Larger max width */
+    width: 90%;
+    max-width: 800px;
+    max-height: 85vh;
     border-radius: 16px;
     box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 .modal-header {
@@ -386,6 +390,7 @@ body {
     background: linear-gradient(135deg, #0b5e7e, #1b8cae);
     color: white;
     border-radius: 16px 16px 0 0;
+    flex-shrink: 0;
 }
 
 .modal-title {
@@ -407,11 +412,13 @@ body {
 
 .modal-body {
     padding: 20px;
+    overflow-y: auto;
+    flex: 1;
 }
 
 #graphCanvas {
     width: 100%;
-    max-height: 500px;
+    max-height: 400px;
 }
 
 .modal-note {
@@ -578,6 +585,7 @@ body {
     .modal-content {
         margin: 15% auto;
         width: 95%;
+        max-height: 80vh;
     }
     
     .modal-header {
@@ -633,13 +641,11 @@ body {
         width: auto;
     }
     
-    /* Make year select smaller */
     #yearSelect {
         min-width: 70px;
         max-width: 85px;
     }
     
-    /* Make month select smaller */
     #monthSelect {
         min-width: 65px;
         max-width: 75px;
@@ -660,18 +666,15 @@ body {
         height: 16px;
     }
     
-    /* Hide the text span on mobile */
     #monthLabel .desktop-only {
         display: none;
     }
     
-    /* Show the icon span on mobile */
     #monthLabel .mobile-only {
         display: inline;
         font-size: 12px;
     }
     
-    /* Clean up label */
     #monthLabel {
         margin-left: 0 !important;
         font-size: 0;
@@ -717,9 +720,10 @@ body {
 /* Desktop modal adjustments */
 @media (min-width: 1024px) {
     .modal-content {
-        margin: 3% auto;  /* Even higher on large screens */
+        margin: 5% auto;
         width: 70%;
-        max-width: 1000px;
+        max-width: 900px;
+        max-height: 80vh;
     }
     
     .modal-body {
@@ -727,6 +731,6 @@ body {
     }
     
     #graphCanvas {
-        max-height: 550px;
+        max-height: 500px;
     }
 }
