@@ -189,10 +189,12 @@ body {
     color: #202124;
 }
 
+/* Hide mobile-only elements on desktop */
 .mobile-only {
     display: none;
 }
 
+/* Desktop-only elements */
 .desktop-only {
     display: inline;
 }
@@ -352,7 +354,7 @@ body {
     opacity: 1;
 }
 
-/* ========== MODAL STYLES - PROPERLY SIZED ========== */
+/* ========== MODAL STYLES - PERFECT CENTERING ========== */
 .modal {
     display: none;
     position: fixed;
@@ -366,12 +368,14 @@ body {
 }
 
 .modal-content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background-color: white;
-    margin: 3% auto;
-    padding: 0;
-    width: 80%;
-    max-width: 750px;
-    max-height: 70vh;
+    width: 85%;
+    max-width: 700px;
+    max-height: 80vh;
     border-radius: 16px;
     box-shadow: 0 20px 40px rgba(0,0,0,0.3);
     display: flex;
@@ -383,21 +387,20 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 14px 20px;
+    padding: 12px 20px;
     border-bottom: 1px solid #e0e5eb;
     background: linear-gradient(135deg, #0b5e7e, #1b8cae);
     color: white;
-    border-radius: 16px 16px 0 0;
     flex-shrink: 0;
 }
 
 .modal-title {
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 600;
 }
 
 .modal-close {
-    font-size: 26px;
+    font-size: 24px;
     font-weight: bold;
     cursor: pointer;
     transition: transform 0.2s;
@@ -416,7 +419,7 @@ body {
 
 #graphCanvas {
     width: 100%;
-    max-height: 320px;
+    max-height: 350px;
 }
 
 .modal-note {
@@ -428,6 +431,7 @@ body {
     border-top: 1px solid #e0e5eb;
 }
 
+/* No data state - smaller, subtler */
 .latest-value.no-data {
     font-size: 18px;
     font-weight: 400;
@@ -579,14 +583,14 @@ body {
         padding: 6px 12px;
     }
     
+    /* Mobile modal */
     .modal-content {
-        margin: 10% auto;
         width: 92%;
-        max-height: 75vh;
+        max-height: 85vh;
     }
     
     .modal-header {
-        padding: 10px 14px;
+        padding: 10px 16px;
     }
     
     .modal-title {
@@ -602,10 +606,11 @@ body {
     }
     
     .modal-note {
-        font-size: 9px;
+        font-size: 10px;
     }
 }
 
+/* Extra small devices (phones under 480px) - ONE ROW LAYOUT */
 @media (max-width: 480px) {
     .filter-bar {
         flex-direction: row;
@@ -679,18 +684,9 @@ body {
     #monthLabel .mobile-only {
         font-size: 12px;
     }
-    
-    .modal-content {
-        margin: 8% auto;
-        width: 95%;
-        max-height: 80vh;
-    }
-    
-    #graphCanvas {
-        max-height: 250px;
-    }
 }
 
+/* Desktop default - hide mobile icon, show text */
 .desktop-only {
     display: inline;
 }
@@ -699,6 +695,7 @@ body {
     display: none;
 }
 
+/* Desktop improvements */
 @media (min-width: 1200px) {
     .site-wrapper {
         padding: 48px 40px;
@@ -719,21 +716,23 @@ body {
     .dashboard-footer {
         padding: 32px 32px 26px 32px;
     }
-}
-
-@media (min-width: 1024px) {
+    
+    /* Desktop modal larger screens */
     .modal-content {
-        margin: 3% auto;
         width: 60%;
-        max-width: 700px;
-        max-height: 65vh;
+        max-width: 800px;
+        max-height: 75vh;
     }
     
     .modal-body {
-        padding: 16px 20px;
+        padding: 20px 24px;
     }
     
     #graphCanvas {
-        max-height: 350px;
+        max-height: 400px;
+    }
+    
+    .modal-note {
+        font-size: 12px;
     }
 }
