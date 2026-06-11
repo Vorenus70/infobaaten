@@ -598,59 +598,6 @@ function showGraph() {
     
     document.getElementById('graphModal').style.display = 'block';
 }
-    
-    const datasets = [
-        {
-            label: 'Endring (cm)',
-            data: changeData,
-            backgroundColor: backgroundColors,
-            borderRadius: 4,
-            borderSkipped: false,
-            barPercentage: isMobile ? 0.5 : 0.4,
-            categoryPercentage: isMobile ? 0.7 : 0.8
-        }
-    ];
-    
-    if (changeData.length >= 3 && trendLineData !== changeData) {
-        datasets.push({
-            label: 'Trendlinje',
-            data: trendLineData,
-            type: 'line',
-            borderColor: '#1a73e8',
-            backgroundColor: 'transparent',
-            borderWidth: isMobile ? 1.5 : 2,
-            borderDash: [5, 5],
-            pointRadius: 0,
-            fill: false,
-            tension: 0,
-            order: 1
-        });
-    }
-    
-    if (changeData.length > 0) {
-        datasets.push({
-            label: `Gj.snitt (${averageValue.toFixed(1)} cm)`,
-            data: Array(changeData.length).fill(averageValue),
-            type: 'line',
-            borderColor: '#ea4335',
-            backgroundColor: 'transparent',
-            borderWidth: isMobile ? 1.5 : 2,
-            borderDash: [],
-            pointRadius: 0,
-            fill: false,
-            tension: 0,
-            order: 0
-        });
-    }
-    
-    chartInstance = new Chart(ctx, {
-        type: 'bar',
-        data: { labels: labels, datasets: datasets },
-        options: chartOptions
-    });
-    
-    document.getElementById('graphModal').style.display = 'block';
-}
 
 function closeModal() {
     document.getElementById('graphModal').style.display = 'none';
