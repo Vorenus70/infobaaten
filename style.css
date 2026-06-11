@@ -169,6 +169,7 @@ body {
     display: flex;
     align-items: center;
     gap: 6px;
+    flex-wrap: wrap;
 }
 
 .filter-left label {
@@ -186,6 +187,16 @@ body {
     background-color: white;
     cursor: pointer;
     color: #202124;
+}
+
+/* Hide mobile-only elements on desktop */
+.mobile-only {
+    display: none;
+}
+
+/* Desktop-only elements */
+.desktop-only {
+    display: inline;
 }
 
 .action-buttons {
@@ -411,6 +422,20 @@ body {
     border-top: 1px solid #e0e5eb;
 }
 
+/* No data state - smaller, subtler */
+.latest-value.no-data {
+    font-size: 18px;
+    font-weight: 400;
+    color: #9aa0a6;
+    font-style: italic;
+}
+
+.latest-value.no-data::after {
+    content: "";
+    display: none;
+}
+
+/* ========== RESPONSIVE ========== */
 @media (max-width: 768px) {
     .hide-on-mobile {
         display: none;
@@ -486,16 +511,14 @@ body {
     
     .filter-bar {
         padding: 8px 12px;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        gap: 8px;
-        flex-wrap: nowrap;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
     }
     
     .filter-left {
-        gap: 4px;
-        flex-shrink: 1;
+        justify-content: space-between;
+        width: 100%;
     }
     
     .filter-left label {
@@ -505,21 +528,20 @@ body {
     .filter-left select {
         padding: 5px 6px;
         font-size: 12px;
-        max-width: 70px;
     }
     
     .action-buttons {
-        gap: 6px;
-        flex-shrink: 0;
+        justify-content: center;
+        gap: 12px;
     }
     
     .action-btn {
-        padding: 5px;
+        padding: 8px 12px;
     }
     
     .action-icon {
-        width: 16px;
-        height: 16px;
+        width: 18px;
+        height: 18px;
     }
     
     .data-table th,
@@ -578,6 +600,38 @@ body {
     }
 }
 
+/* Extra small devices (phones under 480px) */
+@media (max-width: 480px) {
+    .filter-left {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    
+    .filter-left select {
+        flex: 1;
+        min-width: 80px;
+    }
+    
+    .action-buttons {
+        justify-content: space-around;
+    }
+    
+    /* Show icon, hide text on mobile for month label */
+    .desktop-only {
+        display: none;
+    }
+    
+    .mobile-only {
+        display: inline;
+        font-size: 14px;
+    }
+    
+    #monthLabel {
+        margin-left: 0 !important;
+    }
+}
+
+/* Desktop improvements */
 @media (min-width: 1200px) {
     .site-wrapper {
         padding: 48px 40px;
@@ -597,55 +651,5 @@ body {
     
     .dashboard-footer {
         padding: 32px 32px 26px 32px;
-    }
-}
-
-/* No data state - smaller, subtler */
-.latest-value.no-data {
-    font-size: 18px;
-    font-weight: 400;
-    color: #9aa0a6;
-    font-style: italic;
-}
-
-.latest-value.no-data::after {
-    content: "";
-    display: none;
-}
-/* Mobile filter bar fixes */
-@media (max-width: 480px) {
-    .filter-left {
-        flex-wrap: wrap;
-        gap: 8px;
-    }
-    
-    .filter-left label {
-        font-size: 11px;
-    }
-    
-    .filter-left select {
-        font-size: 11px;
-        padding: 5px 6px;
-    }
-    
-    #monthLabel {
-        margin-left: 0 !important;
-    }
-}
-
-/* For very small screens (under 400px) */
-@media (max-width: 400px) {
-    .filter-bar {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    
-    .filter-left {
-        justify-content: space-between;
-    }
-    
-    .action-buttons {
-        justify-content: center;
-        margin-top: 4px;
     }
 }
