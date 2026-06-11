@@ -713,3 +713,20 @@ body {
         padding: 32px 32px 26px 32px;
     }
 }
+
+/* Desktop modal adjustments */
+@media (min-width: 1024px) {
+    .modal-content {
+        margin: 3% auto;  /* Even higher on large screens */
+        width: 70%;
+        max-width: 1000px;
+    }
+    
+    .modal-body {
+        padding: 24px;
+    }
+    
+    #graphCanvas {
+        max-height: 550px;
+    }
+}
