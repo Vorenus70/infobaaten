@@ -91,12 +91,10 @@ function renderTable() {
     
     let filteredRows = allRows;
     
-    // Filter by year
     if (selectedYear !== 'all') {
         filteredRows = filteredRows.filter(row => getYear(row.Date) === parseInt(selectedYear, 10));
     }
     
-    // Filter by month
     if (selectedMonth !== 'all' && selectedYear !== 'all') {
         filteredRows = filteredRows.filter(row => getMonth(row.Date) === parseInt(selectedMonth, 10));
     }
@@ -114,7 +112,6 @@ function renderTable() {
         return;
     }
     
-    // If month is selected, show all rows without month dividers
     if (selectedMonth !== 'all' && selectedYear !== 'all') {
         filteredRows.forEach(row => {
             const tr = document.createElement("tr");
@@ -130,7 +127,6 @@ function renderTable() {
         return;
     }
     
-    // Group by month (only when no specific month is selected)
     const grouped = {};
     filteredRows.forEach(row => {
         const date = getDateObject(row.Date);
@@ -192,18 +188,15 @@ function populateMonthOptions() {
     const monthLabel = document.getElementById('monthLabel');
     const monthOptions = monthSelect.querySelectorAll('option');
     
-    // Reset month select to "Alle måneder"
     monthSelect.value = 'all';
     selectedMonth = 'all';
     
     if (selectedYear === 'all') {
-        // Hide month selector when no year is selected
         monthSelect.style.display = 'none';
         if (monthLabel) monthLabel.style.display = 'none';
         return;
     }
     
-    // Get available months for selected year
     const availableMonths = new Set();
     allRows.forEach(row => {
         if (getYear(row.Date) === parseInt(selectedYear, 10)) {
@@ -212,7 +205,6 @@ function populateMonthOptions() {
         }
     });
     
-    // Enable/disable month options
     for (let i = 1; i < monthOptions.length; i++) {
         const option = monthOptions[i];
         const monthValue = parseInt(option.value, 10);
@@ -225,7 +217,6 @@ function populateMonthOptions() {
         }
     }
     
-    // Show month selector
     monthSelect.style.display = 'inline-block';
     if (monthLabel) monthLabel.style.display = 'inline';
 }
@@ -355,7 +346,6 @@ function refreshData() {
             
             populateYearOptions();
             
-            // Restore previous selections if they still exist
             const yearSelect = document.getElementById('yearSelect');
             if (yearSelect.querySelector(`option[value="${previousYear}"]`)) {
                 yearSelect.value = previousYear;
@@ -472,12 +462,16 @@ function showGraph() {
         const changeCm = row["Change cm/m"];
         let changeNum = parseFloat(changeCm);
         
+        // ZERO-CHANGE FIX: Make zero-change days visible with light gray
         if (isNaN(changeNum)) {
             changeData.push(0);
             backgroundColors.push('#9aa0a6');
+        } else if (changeNum === 0) {
+            changeData.push(0);
+            backgroundColors.push('#dadce0');  // Light gray - visible!
         } else {
             changeData.push(changeNum);
-            backgroundColors.push(changeNum > 0 ? '#0d652d' : (changeNum < 0 ? '#c5221f' : '#9aa0a6'));
+            backgroundColors.push(changeNum > 0 ? '#0d652d' : '#c5221f');
         }
     });
     
@@ -629,7 +623,6 @@ function init() {
             updateLatestCard();
             renderTable();
             
-            // Year select event
             document.getElementById('yearSelect').addEventListener('change', function() {
                 selectedYear = this.value;
                 selectedMonth = 'all';
@@ -638,7 +631,6 @@ function init() {
                 renderTable();
             });
             
-            // Month select event
             document.getElementById('monthSelect').addEventListener('change', function() {
                 selectedMonth = this.value;
                 renderTable();
