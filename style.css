@@ -430,6 +430,12 @@ body {
     font-style: italic;
 }
 
+
+
+
+
+
+
 .latest-value.no-data::after {
     content: "";
     display: none;
@@ -616,19 +622,38 @@ body {
         justify-content: space-around;
     }
     
-    /* Show icon, hide text on mobile for month label */
-    .desktop-only {
+    /* Hide the text span on mobile */
+    #monthLabel .desktop-only {
         display: none;
     }
     
-    .mobile-only {
+    /* Show the icon span on mobile */
+    #monthLabel .mobile-only {
         display: inline;
+        font-size: 14px;
+    }
+    
+    /* Hide any other text inside the label */
+    #monthLabel {
+        font-size: 0;
+    }
+    
+    #monthLabel .mobile-only {
         font-size: 14px;
     }
     
     #monthLabel {
         margin-left: 0 !important;
     }
+}
+
+/* Desktop default - hide mobile icon, show text */
+.desktop-only {
+    display: inline;
+}
+
+.mobile-only {
+    display: none;
 }
 
 /* Desktop improvements */
