@@ -554,7 +554,7 @@ function showGraph() {
             borderSkipped: false,
             barPercentage: isMobile ? 0.5 : 0.4,
             categoryPercentage: isMobile ? 0.7 : 0.8,
-            minBarLength: 3  // KEY FIX: Forces zero bars to be 3px tall
+            minBarLength: 20  // KEY FIX: Forces zero bars to be 3px tall
         }
     ];
     
