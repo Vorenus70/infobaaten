@@ -612,3 +612,40 @@ body {
     content: "";
     display: none;
 }
+/* Mobile filter bar fixes */
+@media (max-width: 480px) {
+    .filter-left {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    
+    .filter-left label {
+        font-size: 11px;
+    }
+    
+    .filter-left select {
+        font-size: 11px;
+        padding: 5px 6px;
+    }
+    
+    #monthLabel {
+        margin-left: 0 !important;
+    }
+}
+
+/* For very small screens (under 400px) */
+@media (max-width: 400px) {
+    .filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filter-left {
+        justify-content: space-between;
+    }
+    
+    .action-buttons {
+        justify-content: center;
+        margin-top: 4px;
+    }
+}
