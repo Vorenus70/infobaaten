@@ -95,7 +95,7 @@ function renderTable() {
         filteredRows = filteredRows.filter(row => getYear(row.Date) === parseInt(selectedYear, 10));
     }
     
-    if (selectedMonth !== 'all' && selectedYear !== 'all') {
+    if (selectedMonth !== 'all') {
         filteredRows = filteredRows.filter(row => getMonth(row.Date) === parseInt(selectedMonth, 10));
     }
     
@@ -106,13 +106,16 @@ function renderTable() {
             message = `Ingen data for ${monthNames[parseInt(selectedMonth) - 1]} ${selectedYear}`;
         } else if (selectedYear !== 'all') {
             message = `Ingen data for ${selectedYear}`;
+        } else if (selectedMonth !== 'all') {
+            message = `Ingen data for ${monthNames[parseInt(selectedMonth) - 1]}`;
         }
         tr.innerHTML = `<td colspan="5" style="text-align: center;">${message}</td>`;
         tbody.appendChild(tr);
         return;
     }
     
-    if (selectedMonth !== 'all' && selectedYear !== 'all') {
+    // If month is selected, show all rows without month dividers
+    if (selectedMonth !== 'all') {
         filteredRows.forEach(row => {
             const tr = document.createElement("tr");
             tr.innerHTML = `
@@ -127,6 +130,7 @@ function renderTable() {
         return;
     }
     
+    // Group by month (only when no specific month is selected)
     const grouped = {};
     filteredRows.forEach(row => {
         const date = getDateObject(row.Date);
@@ -185,26 +189,28 @@ function populateYearOptions() {
 
 function populateMonthOptions() {
     const monthSelect = document.getElementById('monthSelect');
-    const monthLabel = document.getElementById('monthLabel');
     const monthOptions = monthSelect.querySelectorAll('option');
     
-    monthSelect.value = 'all';
-    selectedMonth = 'all';
+    // Get available months for selected year (or all months if no year selected)
+    const availableMonths = new Set();
     
     if (selectedYear === 'all') {
-        monthSelect.style.display = 'none';
-        if (monthLabel) monthLabel.style.display = 'none';
-        return;
-    }
-    
-    const availableMonths = new Set();
-    allRows.forEach(row => {
-        if (getYear(row.Date) === parseInt(selectedYear, 10)) {
+        // When no year selected, get all months from all data
+        allRows.forEach(row => {
             const month = getMonth(row.Date);
             if (month) availableMonths.add(month);
-        }
-    });
+        });
+    } else {
+        // Get months only for selected year
+        allRows.forEach(row => {
+            if (getYear(row.Date) === parseInt(selectedYear, 10)) {
+                const month = getMonth(row.Date);
+                if (month) availableMonths.add(month);
+            }
+        });
+    }
     
+    // Enable/disable month options
     for (let i = 1; i < monthOptions.length; i++) {
         const option = monthOptions[i];
         const monthValue = parseInt(option.value, 10);
@@ -216,9 +222,6 @@ function populateMonthOptions() {
             option.style.opacity = '0.5';
         }
     }
-    
-    monthSelect.style.display = 'inline-block';
-    if (monthLabel) monthLabel.style.display = 'inline';
 }
 
 function updateLatestCard() {
@@ -384,7 +387,7 @@ function exportToCSV() {
         exportRows = exportRows.filter(row => getYear(row.Date) === parseInt(selectedYear, 10));
     }
     
-    if (selectedMonth !== 'all' && selectedYear !== 'all') {
+    if (selectedMonth !== 'all') {
         exportRows = exportRows.filter(row => getMonth(row.Date) === parseInt(selectedMonth, 10));
     }
     
@@ -435,7 +438,7 @@ function showGraph() {
         graphRows = graphRows.filter(row => getYear(row.Date) === parseInt(selectedYear, 10));
     }
     
-    if (selectedMonth !== 'all' && selectedYear !== 'all') {
+    if (selectedMonth !== 'all') {
         graphRows = graphRows.filter(row => getMonth(row.Date) === parseInt(selectedMonth, 10));
     }
     
@@ -462,13 +465,12 @@ function showGraph() {
         const changeCm = row["Change cm/m"];
         let changeNum = parseFloat(changeCm);
         
-        // ZERO-CHANGE FIX: Make zero-change days visible with light gray
         if (isNaN(changeNum)) {
             changeData.push(0);
             backgroundColors.push('#9aa0a6');
         } else if (changeNum === 0) {
             changeData.push(0);
-            backgroundColors.push('#dadce0');  // Light gray - visible!
+            backgroundColors.push('#dadce0');
         } else {
             changeData.push(changeNum);
             backgroundColors.push(changeNum > 0 ? '#0d652d' : '#c5221f');
@@ -554,7 +556,7 @@ function showGraph() {
             borderSkipped: false,
             barPercentage: isMobile ? 0.5 : 0.4,
             categoryPercentage: isMobile ? 0.7 : 0.8,
-            minBarLength: 20  // KEY FIX: Forces zero bars to be 3px tall
+            minBarLength: 20
         }
     ];
     
