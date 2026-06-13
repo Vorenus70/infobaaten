@@ -518,16 +518,17 @@ body {
         font-size: 12px;
     }
     
+    /* Mobile filter bar - buttons on their own row */
     .filter-bar {
-        padding: 8px 12px;
         flex-direction: column;
         align-items: stretch;
-        gap: 10px;
+        gap: 12px;
+        padding: 10px 12px;
     }
     
     .filter-left {
-        justify-content: space-between;
         width: 100%;
+        justify-content: space-between;
     }
     
     .filter-left label {
@@ -540,17 +541,20 @@ body {
     }
     
     .action-buttons {
-        justify-content: center;
-        gap: 12px;
+        width: 100%;
+        justify-content: space-around;
+        gap: 8px;
     }
     
     .action-btn {
-        padding: 8px 12px;
+        flex: 1;
+        justify-content: center;
+        padding: 8px 4px;
     }
     
     .action-icon {
-        width: 18px;
-        height: 18px;
+        width: 16px;
+        height: 16px;
     }
     
     .data-table th,
@@ -610,29 +614,14 @@ body {
     }
 }
 
-/* Extra small devices (phones under 480px) - ONE ROW LAYOUT */
+/* Extra small devices (phones under 480px) */
 @media (max-width: 480px) {
-    .filter-bar {
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 6px;
-        padding: 8px 12px;
-    }
-    
     .filter-left {
-        flex: 2;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
         gap: 4px;
-        flex-wrap: nowrap;
-        width: auto;
-        justify-content: flex-start;
     }
     
     .filter-left label {
         font-size: 11px;
-        white-space: nowrap;
     }
     
     .filter-left select {
@@ -653,20 +642,19 @@ body {
     }
     
     .action-buttons {
-        flex: 1;
-        justify-content: flex-end;
-        gap: 4px;
+        gap: 6px;
     }
     
     .action-btn {
-        padding: 5px;
+        padding: 6px 2px;
     }
     
     .action-icon {
-        width: 16px;
-        height: 16px;
+        width: 14px;
+        height: 14px;
     }
     
+    /* Hide the text span on mobile, show icon */
     #monthLabel .desktop-only {
         display: none;
     }
