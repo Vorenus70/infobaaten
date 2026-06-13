@@ -189,16 +189,6 @@ body {
     color: #202124;
 }
 
-/* Hide mobile-only elements on desktop */
-.mobile-only {
-    display: none;
-}
-
-/* Desktop-only elements */
-.desktop-only {
-    display: inline;
-}
-
 .action-buttons {
     display: flex;
     align-items: center;
@@ -431,7 +421,6 @@ body {
     border-top: 1px solid #e0e5eb;
 }
 
-/* No data state - smaller, subtler */
 .latest-value.no-data {
     font-size: 18px;
     font-weight: 400;
@@ -518,7 +507,7 @@ body {
         font-size: 12px;
     }
     
-    /* ========== FORCE TWO ROWS ON MOBILE ========== */
+    /* FORCE TWO ROWS ON MOBILE */
     .filter-bar {
         display: flex !important;
         flex-direction: column !important;
@@ -531,14 +520,12 @@ body {
         display: flex !important;
         width: 100% !important;
         justify-content: space-between !important;
-        order: 1;
     }
     
     .action-buttons {
         display: flex !important;
         width: 100% !important;
         justify-content: space-evenly !important;
-        order: 2;
         gap: 8px;
     }
     
@@ -593,7 +580,6 @@ body {
         padding: 6px 12px;
     }
     
-    /* Mobile modal */
     .modal-content {
         width: 92%;
         max-height: 85vh;
@@ -660,33 +646,11 @@ body {
         height: 14px;
     }
     
-    /* Hide the text span on mobile, show icon */
-    #monthLabel .desktop-only {
-        display: none;
-    }
-    
-    #monthLabel .mobile-only {
-        display: inline;
-        font-size: 12px;
-    }
-    
+    /* Month label shows text normally */
     #monthLabel {
         margin-left: 0 !important;
-        font-size: 0;
+        font-size: 11px;
     }
-    
-    #monthLabel .mobile-only {
-        font-size: 12px;
-    }
-}
-
-/* Desktop default - hide mobile icon, show text */
-.desktop-only {
-    display: inline;
-}
-
-.mobile-only {
-    display: none;
 }
 
 /* Desktop improvements */
@@ -711,7 +675,6 @@ body {
         padding: 32px 32px 26px 32px;
     }
     
-    /* Desktop modal larger screens */
     .modal-content {
         width: 60%;
         max-width: 800px;
